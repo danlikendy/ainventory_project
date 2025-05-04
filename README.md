@@ -19,6 +19,6 @@ Python 3.10+, pandas, Prophet, statsmodels, seaborn, plotly, scikit-learn, Strea
 - `docker/` — Dockerfile и сборка
 
 ## Запуск (локально)
-```bash```
+```bash
 pip install -r requirements.txt
 jupyter notebook
