@@ -1,24 +1,15 @@
-# ainventory_project
+# AInventory — Demand Forecasting & Inventory Policies
 
-Интеллектуальная система для малого и среднего бизнеса, которая помогает прогнозировать спрос и управлять запасами с учётом сезонности, трендов и промо-акций.
+Platform for forecasting demand and calculating inventory policies.
+- Models: Prophet, SARIMA, ML baselines
+- UI: Streamlit
+- Processes: SemVer, trunk-based, pre-commit, CI
 
-## Возможности
-- Прогнозирование спроса по SKU (Prophet, SARIMA, ML)
-- Визуализация результатов (Streamlit)
-- Рекомендации по закупкам
-- Поддержка CSV, Excel, Google Sheets
-- Упаковка проекта в Docker
+## Quick Start
+python -m venv .venv && source .venv/bin/activate
+pip install -U pip -r requirements.txt
+pre-commit install
+make app
 
-## Технологии
-Python 3.10+, pandas, Prophet, statsmodels, seaborn, plotly, scikit-learn, Streamlit, Docker
-
-## Структура
-- `notebooks/` — исследования, EDA, модели
-- `app/` — веб-интерфейс на Streamlit
-- `data/` — данные (не попадают в Git)
-- `docker/` — Dockerfile и сборка
-
-## Запуск (локально)
-```bash
-pip install -r requirements.txt
-jupyter notebook
+## Data Contracts
+See docs/data_contracts.md
