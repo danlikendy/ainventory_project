@@ -16,7 +16,7 @@
 
 ```
 ainventory_project/
-├── frontend/                 # Next.js frontend
+├── frontend/                # Next.js frontend
 │   ├── components/          # React компоненты
 │   ├── app/                 # Next.js 13+ app router
 │   └── package.json         # Node.js зависимости
