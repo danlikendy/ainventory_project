@@ -25,9 +25,7 @@ async def upload_file(
     category_id: Optional[int] = Form(None, description="ID категории (для products)"),
     db: Session = Depends(get_db)
 ):
-    """Загрузка файла с данными"""
     try:
-        # Проверяем тип файла
         if not file.filename:
             raise HTTPException(status_code=400, detail="Имя файла не указано")
         
@@ -38,18 +36,15 @@ async def upload_file(
                 detail="Неподдерживаемый формат файла. Используйте Excel (.xlsx, .xls) или CSV"
             )
         
-        # Проверяем размер файла
         if file.size and file.size > settings.max_file_size:
             raise HTTPException(
                 status_code=400,
                 detail=f"Файл слишком большой. Максимальный размер: {settings.max_file_size / (1024*1024):.1f} MB"
             )
         
-        # Создаем директорию для загрузок если её нет
         upload_dir = Path(settings.upload_dir)
         upload_dir.mkdir(exist_ok=True)
         
-        # Сохраняем файл
         timestamp = int(os.time.time())
         safe_filename = f"{timestamp}_{file.filename.replace(' ', '_')}"
         file_path = upload_dir / safe_filename
@@ -57,7 +52,6 @@ async def upload_file(
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         
-        # Создаем запись в базе данных
         upload_record = DataUpload(
             filename=file.filename,
             file_path=str(file_path),
@@ -69,7 +63,6 @@ async def upload_file(
         db.commit()
         db.refresh(upload_record)
         
-        # Запускаем обработку файла в фоне
         background_tasks.add_task(
             process_uploaded_file,
             str(file_path),
@@ -92,11 +85,9 @@ async def upload_file(
         raise HTTPException(status_code=500, detail="Внутренняя ошибка сервера")
 
 async def process_uploaded_file(file_path: str, file_type: str, warehouse_id: Optional[int], upload_id: int):
-    """Обработка загруженного файла в фоновом режиме"""
     try:
         logger.info(f"Начинаем обработку файла {file_path}")
         
-        # Обрабатываем файл
         result = await file_processor.process_file(file_path, file_type, warehouse_id)
         
         logger.info(f"Файл {file_path} успешно обработан: {result['records_processed']} записей")

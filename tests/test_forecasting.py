@@ -1,2 +1,2 @@
-def test_placeholder():
-    assert 2 + 2 == 4
+# Tests for forecasting functionality
+# Add actual tests here when implementing forecasting features

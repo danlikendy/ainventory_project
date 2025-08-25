@@ -9,18 +9,15 @@ from .routers import data, forecasts, inventory, analytics
 from ..database.init_db import init_db
 from ..config import settings
 
-# Настройка логирования
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Инициализация при запуске
     logger.info("Starting AInventory API...")
     await init_db()
     logger.info("Database initialized successfully")
     yield
-    # Очистка при остановке
     logger.info("Shutting down AInventory API...")
 
 app = FastAPI(
@@ -30,7 +27,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://localhost:8000"],
@@ -39,7 +35,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Подключение роутеров
 app.include_router(data.router, prefix="/api/v1", tags=["data"])
 app.include_router(forecasts.router, prefix="/api/v1", tags=["forecasts"])
 app.include_router(inventory.router, prefix="/api/v1", tags=["inventory"])
