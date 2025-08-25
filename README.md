@@ -34,7 +34,7 @@ ainventory_project/
 
 ### 1. Клонирование и настройка
 ```bash
-git clone <repository-url>
+git clone https://github.com/danlikendy/ainventory_project
 cd ainventory_project
 
 # Установка зависимостей
