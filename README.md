@@ -130,11 +130,3 @@ make test
 make lint
 make format
 ```
-
-## Конфигурация
-
-Основные настройки в файле `env.example`:
-- Database URL
-- API настройки
-- CORS настройки
-- Параметры прогнозирования
